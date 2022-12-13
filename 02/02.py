@@ -13,7 +13,7 @@ Ass = np.array([
     [1, 1],
     [2, 1],
 ])
-bs = np.array([9, 4])
+bs = np.array([9, 4, 6])
 cs = np.array([2, 3])
 # 係数行列Aの行数mと列数n
 m, n = Ass.shape
