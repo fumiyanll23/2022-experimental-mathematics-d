@@ -4,7 +4,7 @@
 # 最適値: 0
 # 必要なモジュールをインポートする
 import numpy as np
-import scipy.linalg
+import scipy
 from nptyping import Float, NDArray, Shape
 
 
