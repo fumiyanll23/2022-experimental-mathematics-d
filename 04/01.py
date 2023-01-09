@@ -1,61 +1,25 @@
+#必要なモジュールをインポート
 import numpy as np
-import matplotlib.pyplot as plt
 
-plt.style.use("ggplot")
-plt.rcParams["font.size"] = 13
-plt.rcParams["figure.figsize"] = 16, 12
+def f(x0, x1, x2):
+    #目的関数の定義
+    y = x0**2 + x1**2 - x2*2 + 4*x0*x2 + 4*x1*x2 -3*x0 +2*x1 + x2 - 6
+    #勾配ベクトルの定義
+    dydxdz = np.array([2*x0 + 4*x2 - 3,2*x1 + 4*x2 +2,-2 + 4*x0 +4*x1+1])
+    #ヘッセ行列の定義
+    H = np.array([[2, 0, 4],[0, 2, 4],[4, 4, 0]])
+    return y, dydxdz, H
+#初期座標を設定
+x0, x1, x2 = 1, 1, 1
+#ステップ数、各種変数の推移を表示
+print("i    x1          x2          x3          f(x)")
+#ニュートン法を実行
+for i in range(100):
+    y, dydxdz, H = f(x0, x1, x2)
+    print(f"{i:3d} [{x0:10.3e}, {x1:10.3e},{x2:10.3e}], {y:10.3e}")
+    d = - np.dot(np.linalg.inv(H), dydxdz)
+    x0 += d[0]
+    x1 += d[1]
+    x2 += d[2]
 
-class MultiNewton(object):
-    def __init__(self, f, dx0_f, dx1_f, dx2_f, grad_f, hesse):
-        self.f = f
-        self.dx0_f = dx0_f
-        self.dx1_f = dx1_f
-        self.dx2_f = dx2_f
-        self.grad_f = grad_f
-        self.hesse = hesse
-
-    def _compute_dx(self, bar_x):
-        grad = self.grad_f(bar_x)
-        hesse = self.hesse(bar_x)
-        dx = np.linalg.solve(hesse, -grad)
-        return dx
-
-    def solve(self, init_x, n_iter=100, tol=0.01, step_width=1.0):
-        self.hist = np.zeros(n_iter)
-        bar_x = init_x
-        for i in range(n_iter):
-            dx = self._compute_dx(bar_x)
-            # update
-            x = bar_x + dx*step_width
-            print("x = [{0:.2f} {1:.2f}]".format(x[0], x[1]))
-
-            bar_x = x
-            norm_dx = np.linalg.norm(dx)
-            self.hist[i] += norm_dx
-            if norm_dx < tol:
-                self.hist = self.hist[:i]
-                break
-        return x
-
-def _main():
-    f = lambda x: x[0]**2 + x[1]**2 - x[2]**2 +4*x[0]*x[2] + 4*x[1]*x[2] - 3*x[0] + 2*x[1] +x[2] - 6
-    dx0_f = lambda x: 2*x[0] + 4*x[2] + 3
-    dx1_f = lambda x: 2*x[1] + 4*x[2] + 2
-    dx2_f = lambda x: -2*x[2] + 4*x[0] + 4*x[1] + 1
-    grad_f = lambda x: np.array([dx0_f(x), dx1_f(x), dx2_f(x)])
-    hesse = lambda x: np.array([[2, 0, 4],[0, 2, 4],[4, 4, -2]])
-
-    init_x = np.array([10, 8])
-    solver = MultiNewton(f, dx0_f, dx1_f, dx2_f, grad_f, hesse)
-    res = solver.solve(init_x=init_x, n_iter=100, step_width=1.0)
-    print("Solution is x = [{0:.2f} {1:.2f} {2:.2f}]".format(res[0], res[1], res[2]))
-
-    errors = solver.hist
-    epochs = np.arange(0, errors.shape[0])
-
-    plt.plot(epochs, errors)
-    plt.tight_layout()
-    plt.savefig('error_mult.png')
-
-if __name__ == "__main__":
-    _main()
+#https://helve-blog.com/posts/math/newtons-method-python/　参照
