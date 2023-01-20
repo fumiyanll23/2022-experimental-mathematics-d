@@ -33,7 +33,7 @@ constraint = [constraint2]
 
 #初期点を設定
 x0=[-1,-1]
-
+#逐次二次計画法を実行
 result=minimize(objective_fnc, x0, method="SLSQP", constraints=constraint)
 
 #計算結果を表示
