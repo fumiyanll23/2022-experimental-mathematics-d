@@ -4,7 +4,7 @@
 
 2022年度第4ターム開講「実験数学D」の講義内で紹介したJupyter NotebookおよびPythonファイルをまとめている．
 
-## 使い方 (2023/01/08現在)
+## 使い方 (2023/01/23現在)
 
 **Windowsユーザ** はPowerShellを起動して以下のコマンドを実行し，PowerShellからコマンドを実行する許可を与える:
 
@@ -29,7 +29,7 @@ conda config --add channels conda-forge
 3. 以下のコマンドを実行し，必要な外部モジュールをインストールする:
 
 ```terminal
-conda install ipykernel scipy numpy nptyping
+conda install ipykernel scipy numpy nptyping matplotlib picos
 ```
 
 ### それ以外の場合
@@ -41,7 +41,7 @@ conda install ipykernel scipy numpy nptyping
 2. 以下のコマンドを実行し，必要な外部モジュールをインストールする:
 
 ```powershell
-python -m pip install "ipykernel >= 6.17" "scipy >= 1.9" "numpy >= 1.23" "nptyping >= 2.4"
+python -m pip install "ipykernel >= 6.17" "scipy >= 1.9" "numpy >= 1.23" "nptyping >= 2.4" "matplotlib >= 3.6" "picos"
 ```
 
 ## 【発展】仮想環境のすゝめ
@@ -67,7 +67,7 @@ conda activate 2022emd
 4. 以下のコマンドを実行し，必要な外部モジュールをインストールする:
 
 ```terminal
-conda install ipykernel scipy numpy nptyping
+conda install ipykernel scipy numpy nptyping matplotlib picos
 ```
 
 ### それ以外の場合
@@ -99,7 +99,7 @@ source .venv/bin/activate
 4. 以下のコマンドを実行し，必要な外部モジュールをインストールする:
 
 ```powershell
-python -m pip install "ipykernel >= 6.17" "scipy >= 1.9" "numpy >= 1.23" "nptyping >= 2.4"
+python -m pip install "ipykernel >= 6.17" "scipy >= 1.9" "numpy >= 1.23" "nptyping >= 2.4" "matplotlib >= 3.6" "picos"
 ```
 
 ## 参考文献
